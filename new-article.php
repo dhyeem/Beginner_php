@@ -2,18 +2,38 @@
   require 'includes/database.php';
 
 $errors = [];
+$title = '';
+$content = '';
+//$published_at = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+  $title = $_POST['title'];
+  $content = $_POST['content'];
+  $published_at = $_POST['published_at'];
 
-  if ($_POST['title'] == '') {
-    $errors[]= "Title is required";
+  if ($title == '') {
+      $errors[] = 'Title is required';
   }
-  if ($_POST['content'] == '') {
-    $errors[]= "Content is required";
+  if ($content == '') {
+      $errors[] = 'Content is required';
   }
-  if ($_POST['published_at'] == '') {
-    $errors[]= "Date is required";
+
+  if ($published_at != '') {
+      $date_time = date_create_from_format('Y-m-d H:i:s', $published_at);
+
+      if ($date_time === false) {
+
+          $errors[] = 'Invalid date and time';
+
+      } else {
+
+          $date_errors = date_get_last_errors();
+
+          if ($date_errors['warning_count'] > 0) {
+              $errors[] = 'Invalid date and time';
+          }
+      }
   }
 
 if (empty($errors)) {
@@ -32,26 +52,33 @@ if (empty($errors)) {
     echo mysqli_error($conn);
   }
   else {
-    mysqli_stmt_bind_param($stmt, "sss", $_POST['title'], $_POST['content'], $_POST['published_at']);
+
+    if ($published_at == '') {
+      $published_at = null ;
+      }
+    mysqli_stmt_bind_param($stmt, "sss", $title, $content, $published_at);
 
     if (mysqli_stmt_execute($stmt)){
 
       $id = mysqli_insert_id($conn);
-      echo "Inserted recorded with the ID: $id" ;
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+          $protocol = 'https';
+        } else {
+          $protocol = 'http';
+        }
+
+      header("Location: $protocol://" . $_SERVER['HTTP_HOST'] . "/phpfb/article.php?id=$id");
+      exit ; 
     }
       else {
         echo mysqli_stmt_error($stmt);
       }
-
-
-        }
+   
 
       }
-}
+}}
 
-/*$inserQuery = "INSERT INTO article
-                values (200,"Title here" ,"content here" , "publish_at" )"
-$Quere = "INSERT INTO article (title,content) values ("title here", "Content here")" */
+
 ?>
 <?php   require "includes/header.php";?>
 <nav>
@@ -68,15 +95,15 @@ $Quere = "INSERT INTO article (title,content) values ("title here", "Content her
 <form class="" action="" method="post">
   <div class="">
     <label for="title">Title</label>
-    <input type="text" name="title" id="title" placeholder="Article Title" value="">
+    <input type="text" name="title" id="title" placeholder="Article Title" value="<?= htmlspecialchars($title) ;?>">
   </div>
   <div class="">
     <label for="content">Content</label>
-    <textarea name="content"  id="content" rows="8" cols="80"></textarea>
+    <textarea name="content"  id="content" rows="8" cols="80" placeholder='Article Conent' ><?= htmlspecialchars($content);?></textarea>
   </div>
   <div class="">
-    <label for="publish_at">Publish Date and Time</label>
-    <input type="datetime-local" name="published_at" value="" id="published_at">
+    <label for="published_at">Publish Date and Time</label>
+    <input type="datetime-local" name="published_at" value="<?= htmlspecialchars($published_at) ;?>" id="published_at">
   </div>
   <div class="">
     <button>Add</button>
@@ -84,4 +111,4 @@ $Quere = "INSERT INTO article (title,content) values ("title here", "Content her
 
 </form>
 
-<?php   require "includes/footer.php";?>
+<?php require 'includes/footer.php'; ?>

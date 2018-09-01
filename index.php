@@ -21,6 +21,7 @@ else {
 
  ?>
 <?php require "includes/header.php" ;?>
+<a href="/phpfb/new-article.php">New Article</a>
        <?php if (empty($articles)): ?>
          <p>No articles found.</p>
        <?php else: ?>
@@ -31,8 +32,8 @@ else {
 
 
         <article class="">
-          <h2><a href="article.php?id=<?= $article['id'];?>"><?= $article['title'] ;?> </a></h2>
-          <p><?= $article['content'] ?> </p>
+          <h2><a href="article.php?id=<?= $article['id'] ;?>"><?= htmlspecialchars($article['title']) ;?> </a></h2>
+          <p><?= htmlspecialchars($article['content']) ?> </p>
         </article>
           </li>
         <?php endforeach;?>
