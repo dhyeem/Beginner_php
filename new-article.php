@@ -58,7 +58,13 @@ $Quere = "INSERT INTO article (title,content) values ("title here", "Content her
   <a href="/phpfb">Home</a>
 </nav>
 <h2>New Article</h2>
-<?php var_dump($errors);  ?>
+<?php if (!empty($errors)): ; ?>
+  <ul>
+  <?php foreach ($errors as $error) :?>
+   <li><?= $error ?></li>
+  <?php endforeach ;?>
+<?php endif ;?>
+  </ul>
 <form class="" action="" method="post">
   <div class="">
     <label for="title">Title</label>
