@@ -5,7 +5,6 @@
   *
   * Get the Database connection
   *
-  *
   * @return object connectoin to mysql server
   *
   */
@@ -21,10 +20,17 @@ $conn = mysqli_connect($db_host, $db_username, $db_password, $db_name);
 
 
 // check the db connctoin
-if (mysqli_connect_error()) {
-  echo mysqli_connect_error();
-  exit;
-  }
+  if (mysqli_connect_error()) {
+    echo mysqli_connect_error();
+    exit;
+    }
+    mysqli_set_charset($conn,"utf8");
   return $conn;
+
+  // Change character set to utf8
+
 }
+
+
+
  ?>

@@ -1,50 +1,22 @@
 <?php
-require "includes/database.php" ;
+require 'includes/database.php' ;
+require 'includes/article.php' ;
 
 
-
- // echo "Connecting to Db Secsses! ";
 $conn = getDB();
 
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-$sql = "SELECT *
-        FROM article
-        where id = " . $_GET['id'];
+if (isset($_GET['id'])){
 
-$results = mysqli_query($conn, $sql) ;
+    $article = getArticle($conn, $_GET['id']);
 
-
-
-if ($results === false) {
-  echo mysqli_error($conn);
-}
-else {
-  $article = mysqli_fetch_assoc($results);
-
-}
-
-}
-else {
+} else {
   $article = null ;
 }
 
  ?>
+<?php require "includes/header.php" ; ?>
 
-
-
- <!DOCTYPE html>
- <html lang="en" dir="ltr">
-   <head>
-     <meta charset="utf-8">
-     <title>My Blog</title>
-     <h1>My Blog</h1>
-     <nav>
-       <a href="/phpfb">Home</a>
-     </nav>
-  </head>
-     <body>
-     <main>
-       <?php if ($article == null): ?>
+       <?php if ($article === null): ?>
          <p>Article not found.</p>
        <?php else: ?>
          <article class="">
@@ -52,11 +24,8 @@ else {
         <p>   <?= htmlspecialchars($article["content"]) ; ?></p>
          </article>
 
-            <?php endif; ?>
-     </main>
-
-
-
-
-   </body>
- </html>
+        <a href="edit-article.php?id=<?= $article['id']; ?>">Edit</a>
+        <a href="delete-article.php?id=<?= $article['id']; ?>">Delete</a>
+        <?php endif; ?>
+   
+<?php require "includes/footer.php" ; ?>

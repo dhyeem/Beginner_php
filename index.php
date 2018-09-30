@@ -2,10 +2,12 @@
 require "includes/database.php" ;
 
 $conn = getDB();
+
 $sql = "SELECT *
         FROM article
         order by published_at;" ;
 // quere the DB for articles
+
 $result = mysqli_query($conn, $sql) ;
 
 
@@ -21,7 +23,7 @@ else {
 
  ?>
 <?php require "includes/header.php" ;?>
-<a href="/phpfb/new-article.php">New Article</a>
+<a href= "new-article.php">New Article</a>
        <?php if (empty($articles)): ?>
          <p>No articles found.</p>
        <?php else: ?>

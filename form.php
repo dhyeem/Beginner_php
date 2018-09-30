@@ -20,6 +20,7 @@ var_dump($_POST);
   </head>
   <body>
     <form class="" method="post" >
+    <form accept-charset="utf-8">
     <div class=""> <label for="username">Username :</label>
       <input type="text" name="userName" value="" id="username" placeholder="example@example.com">
     </div>
