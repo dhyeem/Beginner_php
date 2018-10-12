@@ -1,5 +1,8 @@
 <?php
 require "includes/database.php" ;
+require 'includes/auth.php';
+
+session_start();
 
 $conn = getDB();
 
@@ -23,7 +26,18 @@ else {
 
  ?>
 <?php require "includes/header.php" ;?>
-<a href= "new-article.php">New Article</a>
+
+
+<?php if (isLogedIn()): ?>
+  <p>Your are loged in!</p> <a href="logout.php">Log out</a>
+  <p><a href= "new-article.php">New Article</a></p>
+
+<?php else: ?>
+  <p>you are not Loged in.</p> <a href="login.php">Log in</a>
+<?php endif; ?>
+
+<br>
+
        <?php if (empty($articles)): ?>
          <p>No articles found.</p>
        <?php else: ?>
