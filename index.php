@@ -1,27 +1,14 @@
 <?php
-require "includes/database.php" ;
+require "classes/Database.php" ;
 require 'includes/auth.php';
+require 'classes/Article.php';
 
 session_start();
 
-$conn = getDB();
+$db = new Database();
+$conn = $db->getConn();
 
-$sql = "SELECT *
-        FROM article
-        order by published_at;" ;
-// quere the DB for articles
-
-$result = mysqli_query($conn, $sql) ;
-
-
-// check if theere is articles or not
-if ($result === false) {
-  echo mysqli_error($conn);
-}
-else {
-  $articles = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-}
+$articles = Article::getAll($conn);
 
 
  ?>
