@@ -1,11 +1,16 @@
 <?php 
 require 'includes/url.php';
+require 'classes/User.php';
+require 'classes/Database.php';
 
 session_start();
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    if ($_POST['username'] == 'ali' && $_POST['password'] == '123' ){
+    $db = new Database();
+    $conn = $db->getConn();
+    
+    if (User::authenticate($conn, $_POST['username'],$_POST['password'])){
         // to increase security and fix session attack
         session_create_id(ture);
         $_SESSION['is_loged_in'] = true;
