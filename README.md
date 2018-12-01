@@ -2,4 +2,11 @@
 
 This repo is for one of the PHP Beginners courses. 
 
-this will be updated soon. 
+
+this project is for making a bloging system. with the flowing features: 
+- Articles
+- user auth
+- edit and delete article. 
+
+
+and more. 
