@@ -2,4 +2,4 @@
 
 This repo is for one of the PHP Beginners courses. 
 
-this will be updated frequnitly. 
+this will be updated soon. 
