@@ -1,10 +1,6 @@
 <?php
-  require 'classes/Database.php' ;
-  require 'classes/Article.php' ;
-  require 'classes/Url.php';
-  require 'classes/Auth.php';
+  require "includes/init.php";
 
-session_start();
 
 if ( ! Auth::isLogedIn() ){
   die("unthorized");
