@@ -9,8 +9,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     if (User::authenticate($conn, $_POST['username'],$_POST['password'])){
         // to increase security and fix session attack
-        session_create_id(ture);
-        $_SESSION['is_loged_in'] = true;
+        Auth::login();
         Url::redirect('/');
     }
     else {
