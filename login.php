@@ -1,5 +1,5 @@
 <?php 
-require 'includes/url.php';
+require 'classes/Url.php';
 require 'classes/User.php';
 require 'classes/Database.php';
 
@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // to increase security and fix session attack
         session_create_id(ture);
         $_SESSION['is_loged_in'] = true;
-        redirect('/');
+        Url::redirect('/');
     }
     else {
         $error = "login incorrect !" ;

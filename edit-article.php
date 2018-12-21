@@ -1,7 +1,7 @@
 <?php
 require 'classes/Database.php' ;
 require 'classes/Article.php' ;
-require 'includes/url.php';
+require 'classes/Url.php';
 
 $db = new Database; 
 $conn = $db->getConn() ;
@@ -33,7 +33,7 @@ if (isset($_GET['id']))
 
             if ($article->update($conn))
             {
-                redirect("/article.php?id={$article->id}");
+                Url::redirect("/article.php?id={$article->id}");
             }
     
         
